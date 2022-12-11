@@ -10,23 +10,11 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack{
-            LinearGradient(gradient: Gradient(colors: [Color.blue , Color("Color")]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
+            DayNightMode(topColor: .blue, bottomColor: Color("Color"))
             VStack{
-                Text("Cuprotino, Ca")
-                    .font(.system(size: 32, weight: .medium, design: .default))
-                    .foregroundColor(Color.white)
-                    .padding()
                 
-                VStack(spacing: 9){
-                    Image(systemName: "cloud.sun.fill")
-                        .renderingMode(.original)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 100, height: 100)
-                    
-                    Text("76°").font(.system(size: 50))
-                        .foregroundColor(.white)
-                }
+                CityNameView(cityName: "Cuprotino, Ca")
+                WeatherMainPart(weather: "cloud.sun.fill", tampareture: 76)
                 Spacer()
                 HStack(spacing: 20) {
                     WeatherDayView(dayOfWeek: "Tue", imageView: "cloud.sun.fill", tampareture: 76)
@@ -34,6 +22,12 @@ struct ContentView: View {
                     WeatherDayView(dayOfWeek: "Tue", imageView: "cloud.sun.fill", tampareture: 76)
                     WeatherDayView(dayOfWeek: "Tue", imageView: "cloud.sun.fill", tampareture: 76)
                     WeatherDayView(dayOfWeek: "Tue", imageView: "cloud.sun.fill", tampareture: 76)
+                    
+                }
+                Spacer()
+                Button{
+                    print("Tapped")
+                }label: {
                     
                 }
                 Spacer()
@@ -67,5 +61,62 @@ struct WeatherDayView: View {
             Text("\(tampareture)°").font(.system(size: 28))
                 .foregroundColor(.white)
         }
+    }
+}
+
+struct DayNightMode: View {
+    var topColor: Color
+    var bottomColor: Color
+    
+    var body: some View {
+
+        
+        LinearGradient(gradient: Gradient(colors: [topColor , bottomColor]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
+    }
+}
+
+struct CityNameView: View {
+    
+    var cityName: String
+    
+    var body: some View {
+        Text(cityName)
+            .font(.system(size: 32, weight: .medium, design: .default))
+            .foregroundColor(Color.white)
+            .padding()
+    }
+}
+
+struct WeatherMainPart: View{
+    
+    var weather: String
+    var tampareture: Int
+    
+    var body: some View {
+        VStack(spacing: 9){
+            Image(systemName: weather)
+                .renderingMode(.original)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 100, height: 100)
+            
+            Text("\(tampareture)°").font(.system(size: 50))
+                .foregroundColor(.white)
+        }
+    }
+}
+
+struct WeatherButton: View {
+    
+    var title: String
+    var forgroundColor: Color
+    var textColor: Color
+    
+    var body: some View {
+        Text(title)
+            .frame(width: 200, height: 50)
+            .foregroundColor(forgroundColor)
+            .background(textColor)
+            .cornerRadius(10)
     }
 }
